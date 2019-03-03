@@ -15,4 +15,8 @@ class Album {
     @SerializedName("title")
     @Expose
     var title = ""
+
+    override fun toString(): String{
+        return id.toString() + ": " + title + " (user " + userId + ")"
+    }
 }
