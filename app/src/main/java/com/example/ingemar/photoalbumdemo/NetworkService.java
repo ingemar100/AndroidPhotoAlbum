@@ -1,12 +1,13 @@
 package com.example.ingemar.photoalbumdemo;
 
+
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class NetworkService {
-    private static NetworkService mInstance;
     private static final String BASE_URL = "https://jsonplaceholder.typicode.com";
     private Retrofit mRetrofit;
+    private static NetworkService mInstance = new NetworkService();
 
     private NetworkService() {
         mRetrofit = new Retrofit.Builder()
@@ -15,14 +16,11 @@ public class NetworkService {
                 .build();
     }
 
-    public static NetworkService getInstance() {
-        if (mInstance == null) {
-            mInstance = new NetworkService();
-        }
-        return mInstance;
+    public JsonApi getJsonInterface() {
+        return mRetrofit.create(JsonApi.class);
     }
 
-    public JsonPlaceholderInterface getJsonInterface() {
-        return mRetrofit.create(JsonPlaceholderInterface.class);
+    public static NetworkService instance(){
+        return mInstance;
     }
 }

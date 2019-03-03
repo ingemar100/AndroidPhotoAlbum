@@ -3,13 +3,19 @@ package com.example.ingemar.photoalbumdemo
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.view.Menu
 import android.view.MenuItem
 import kotlinx.android.synthetic.main.activity_album_list.*
 import android.util.Log
-import android.widget.TextView
+import android.widget.*
+import com.squareup.picasso.Picasso
 import retrofit2.Call
 import retrofit2.Response
+import android.widget.ArrayAdapter
+
+
 
 
 class AlbumListActivity : AppCompatActivity() {
@@ -17,19 +23,44 @@ class AlbumListActivity : AppCompatActivity() {
     //json call for albums
     //convert json to objects
     //add list of albums with thumbnails
-    private fun load(){
-        val tag = "Network:"
-        NetworkService.getInstance()
+
+    lateinit var photos: List<Photo>
+
+    //load json photo objects, draw layout when finished
+    private fun loadData(){
+        val tag = "Data"
+        NetworkService.instance()
                 .jsonInterface
-                .getAlbums()
+                .getPhotos()
+                .enqueue(object : retrofit2.Callback<List<Photo>> {
+                    override fun onResponse(call: Call<List<Photo>>, response: Response<List<Photo>>) {
+                        photos = response.body()!!
+                        init()
+                    }
+
+                    override fun onFailure(call: Call<List<Photo>>, t: Throwable) {
+                        Log.e(tag, "Error occurred while getting request!")
+                        t.printStackTrace()
+                    }
+                })
+    }
+    private fun init(){
+        val tag = "Init"
+
+        NetworkService.instance().jsonInterface.getAlbums()
                 .enqueue(object : retrofit2.Callback<List<Album>> {
                     override fun onResponse(call: Call<List<Album>>, response: Response<List<Album>>) {
                         val albums = response.body()!!
-                        val view = findViewById<TextView>(R.id.albums_textview)
-                        view.setText("")
+                        val list = findViewById<ListView>(R.id.albums_list)
+                        var listItems = ArrayList<String>()
+
                         for (a in albums){
-                            view.append(a.id.toString() + ": " + a.title + " (user: " + a.userId + "\n")
+                            listItems.add(a.id.toString() + ": " + a.title + " (user " + a.userId + ")")
                         }
+
+                        list.adapter = ArrayAdapter<String>(applicationContext,
+                                android.R.layout.simple_list_item_1,
+                                listItems)
                     }
 
                     override fun onFailure(call: Call<List<Album>>, t: Throwable) {
@@ -47,8 +78,8 @@ class AlbumListActivity : AppCompatActivity() {
             Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show()
         }
+        loadData()
 
-        load()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
