@@ -91,4 +91,5 @@
     </string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_album_view">AlbumViewActivity</string>
+    <string name="title_activity_photo_view_activity">PhotoViewActivity</string>
 </resources>

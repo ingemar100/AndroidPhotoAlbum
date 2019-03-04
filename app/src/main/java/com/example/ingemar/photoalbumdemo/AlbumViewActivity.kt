@@ -1,8 +1,11 @@
 package com.example.ingemar.photoalbumdemo
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
+import android.view.View
+import android.widget.AdapterView
 import android.widget.GridLayout
 import android.widget.ImageView
 import android.widget.TextView
@@ -12,7 +15,7 @@ import kotlinx.android.synthetic.main.activity_album_view.*
 
 class AlbumViewActivity : AppCompatActivity() {
 
-    var albumId = 0
+    lateinit var album : Album
     lateinit var photos : List<Photo>
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -20,25 +23,26 @@ class AlbumViewActivity : AppCompatActivity() {
         setContentView(R.layout.activity_album_view)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        albumId = intent.getIntExtra("id", 0)
-        photos = Loader.photos!!.filter { it.albumId == albumId }
+        album = Loader.albums.find{ it.id == intent.getIntExtra("id", 0)}!!
+        photos = Loader.photos!!.filter { it.albumId == album.id }
         createView()
     }
 
     private fun createView(){
-        //titlebar with album name
+        //fix titlebar with album name, add user id
+        album_toolbar.title = album.title
 
         var layout = findViewById<GridLayout>(R.id.photo_grid)
         layout.columnCount = 7
         for (photo in photos){
-            //imageview
-            val width = 150 // change to screen width / 4
             var thumb = ImageView(applicationContext)
-//            thumb.maxWidth = width
-//            thumb.maxHeight = width
-
             Picasso.get().load(photo.thumbnailUrl).into(thumb)
 
+            thumb.setOnClickListener{
+                val n = Intent(applicationContext, PhotoViewActivity::class.java)
+                n.putExtra("id", photo.id)
+                startActivity(n)
+            }
             layout.addView(thumb)
         }
     }

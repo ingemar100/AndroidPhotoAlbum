@@ -6,15 +6,16 @@
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".AlbumViewActivity"
-    tools:showIn="@layout/activity_album_view">
+    tools:showIn="@layout/activity_album_view"
+    >
 
     <GridLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:id="@+id/photo_grid"
         android:orientation="horizontal"
         android:alignmentMode="alignMargins"
-        android:layout_centerHorizontal="true"
+        android:layout_gravity="center_horizontal"
         >
     </GridLayout>
 </android.support.v4.widget.NestedScrollView>
