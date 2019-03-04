@@ -23,4 +23,6 @@ class Photo {
     @SerializedName("thumbnailUrl")
     @Expose
     var thumbnailUrl = ""
+
+    lateinit var album: Album
 }

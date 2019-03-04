@@ -19,4 +19,6 @@ class Album {
     override fun toString(): String{
         return id.toString() + ": " + title + " (user " + userId + ")"
     }
+
+    lateinit var photos: List<Photo>
 }

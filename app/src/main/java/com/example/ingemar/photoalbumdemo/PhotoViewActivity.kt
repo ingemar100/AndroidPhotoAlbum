@@ -1,5 +1,6 @@
 package com.example.ingemar.photoalbumdemo
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.constraint.ConstraintLayout
 import android.support.design.widget.Snackbar
@@ -24,6 +25,26 @@ class PhotoViewActivity : AppCompatActivity() {
 
         photo = Loader.photos.find{ it.id == intent.getIntExtra("id", 0)}!!
         displayImage()
+
+        //swipe left/right listener for next photo
+        findViewById<ImageView>(R.id.photo_view).setOnTouchListener(object : OnSwipeTouchListener(applicationContext){
+            override fun onSwipeRight(){
+                //previous
+                val n = photo.album.photos.find{it.id == photo.id - 1}
+                if (n != null){
+                    photo = n
+                    displayImage()
+                }
+            }
+            override fun onSwipeLeft(){
+                //next
+                val n = photo.album.photos.find{it.id == photo.id + 1}
+                if (n != null){
+                    photo = n
+                    displayImage()
+                }
+            }
+        })
     }
 
     private fun displayImage(){
