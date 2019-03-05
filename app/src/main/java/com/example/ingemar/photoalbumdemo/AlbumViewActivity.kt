@@ -21,6 +21,7 @@ class AlbumViewActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_album_view)
+        setSupportActionBar(album_toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         album = Loader.albums.find{ it.id == intent.getIntExtra("id", 0)}!!
@@ -29,8 +30,7 @@ class AlbumViewActivity : AppCompatActivity() {
     }
 
     private fun createView(){
-        //fix titlebar with album name, add user id
-        album_toolbar.title = album.title
+        title = album.title
 
         var layout = findViewById<GridLayout>(R.id.photo_grid)
         layout.columnCount = 7

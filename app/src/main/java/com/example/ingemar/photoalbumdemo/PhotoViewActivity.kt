@@ -1,12 +1,7 @@
 package com.example.ingemar.photoalbumdemo
 
-import android.content.Intent
 import android.os.Bundle
-import android.support.constraint.ConstraintLayout
-import android.support.design.widget.Snackbar
-import android.support.v7.app.AppCompatActivity;
-import android.view.Gravity.CENTER
-import android.widget.GridLayout
+import android.support.v7.app.AppCompatActivity
 import android.widget.ImageView
 import com.squareup.picasso.Picasso
 
@@ -50,5 +45,7 @@ class PhotoViewActivity : AppCompatActivity() {
     private fun displayImage(){
         var pic: ImageView = findViewById<ImageView>(R.id.photo_view)
         Picasso.get().load(photo.url).into(pic)
+
+        title = photo.title
     }
 }

@@ -15,7 +15,8 @@
             android:name=".PhotoViewActivity"
             android:label="@string/title_activity_photo_view_activity"
             android:parentActivityName=".AlbumViewActivity"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar"
+            android:launchMode="singleTask">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.ingemar.photoalbumdemo.AlbumViewActivity" />
@@ -24,7 +25,8 @@
             android:name=".AlbumViewActivity"
             android:label="@string/title_activity_album_view"
             android:parentActivityName=".AlbumListActivity"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar"
+            android:launchMode="singleTask">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.ingemar.photoalbumdemo.AlbumListActivity" />
@@ -32,7 +34,8 @@
         <activity
             android:name=".AlbumListActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar"
+            android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
