@@ -25,11 +25,6 @@ class AlbumViewActivity : AppCompatActivity() {
         photos = Loader.photos!!.filter { it.albumId == album.id }
         createView()
     }
-//
-//    override fun onResume(){
-//        super.onResume()
-//        createView()
-//    }
 
     private fun createView(){
         title = album.title
