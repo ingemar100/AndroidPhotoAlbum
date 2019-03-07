@@ -2,16 +2,13 @@ package com.example.ingemar.photoalbumdemo
 
 import android.content.Intent
 import android.os.Bundle
-import android.support.design.widget.Snackbar
+import android.support.design.widget.CoordinatorLayout
 import android.support.v7.app.AppCompatActivity
-import android.view.View
-import android.widget.AdapterView
-import android.widget.GridLayout
-import android.widget.ImageView
-import android.widget.TextView
+import android.util.Log
+import android.widget.*
 import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.activity_album_list.*
 import kotlinx.android.synthetic.main.activity_album_view.*
+
 
 class AlbumViewActivity : AppCompatActivity() {
 
@@ -28,12 +25,22 @@ class AlbumViewActivity : AppCompatActivity() {
         photos = Loader.photos!!.filter { it.albumId == album.id }
         createView()
     }
+//
+//    override fun onResume(){
+//        super.onResume()
+//        createView()
+//    }
 
     private fun createView(){
         title = album.title
 
         var layout = findViewById<GridLayout>(R.id.photo_grid)
-        layout.columnCount = 7
+
+        val displayMetrics = applicationContext.getResources().getDisplayMetrics()
+        val screenWidthDp = displayMetrics.widthPixels / displayMetrics.density
+        val columnWidthDp = 150 / displayMetrics.density
+        layout.columnCount = (screenWidthDp / columnWidthDp).toInt()
+
         for (photo in photos){
             var thumb = ImageView(applicationContext)
             Picasso.get().load(photo.thumbnailUrl).into(thumb)
@@ -45,5 +52,6 @@ class AlbumViewActivity : AppCompatActivity() {
             }
             layout.addView(thumb)
         }
+
     }
 }

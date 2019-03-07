@@ -16,6 +16,7 @@
         android:orientation="horizontal"
         android:alignmentMode="alignMargins"
         android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/photo_grid_margin"
         >
     </GridLayout>
 </android.support.v4.widget.NestedScrollView>
